@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.StandardDao">
+    <cache></cache>
+    <insert id="addStandard" parameterType="Standard">
+        insert into standard (std_num,zhname,version,skeys,release_date,impl_date,package_path)
+        values(#{std_num},#{zhname},#{version},#{skeys},#{release_date},#{impl_date},#{package_path})
+    </insert>
+    <update id="updateStandard" parameterType="Standard">
+          UPDATE standard
+          <set>
+              <if test="1==1">
+                  std_num=#{std_num},zhname=#{zhname},version=#{version},skeys=#{skeys},release_date=#{release_date},impl_date=#{impl_date},
+              </if>
+              <if test="package_path!=null&amp;&amp;package_path!=''">
+              package_path=#{package_path},
+              </if>
+
+          </set>
+          WHERE id=#{id}
+    </update>
+    <delete id="deleteStandard" parameterType="int">
+        delete from standard where id in
+        <foreach collection="array" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </delete>
+    <select id="getStandardByPage" resultType="emtity.Standard" parameterType="HashMap">
+        select * from standard
+         <where>
+             <if test="std_num!=null">
+                and std_num LIKE concat('%',#{std_num},'%')
+             </if>
+             <if test="zhname!=null">
+                and zhname LIKE concat('%',#{zhname},'%')
+             </if>
+         </where>
+        ORDER BY std_num limit #{start},#{pageSize}
+    </select>
+    <select id="getAllCount" resultType="java.lang.Integer" parameterType="int">
+        select count(*) from standard
+    </select>
+    <select id="getStandardbyId" resultType="emtity.Standard">
+        SELECT *from standard where id=#{id}
+    </select>
+    <select id="getStandardLikeZhanName" resultType="emtity.Standard" parameterType="string">
+        SELECT *FROM standard WHERE zhname LIKE concat('%',#{zhname},'%')
+    </select>
+    <select id="getStandardLikeStd_num" resultType="emtity.Standard">
+        SELECT *FROM stusystem.standard WHERE std_num LIKE concat('%',#{std_num},'%')
+    </select>
+    <select id="getCount" resultType="java.lang.Integer" parameterType="HashMap">
+        SELECT count(*) FROM stusystem.standard
+        <where>
+            <if test="std_num!=null">
+                AND std_num LIKE concat('%',#{std_num},'%')
+            </if>
+            <if test="zhname!=null">
+                and zhname LIKE concat('%',#{zhname},'%')
+            </if>
+        </where>
+    </select>
+    <select id="getStandardByStd_num" resultType="emtity.Standard" parameterType="string">
+        SELECT *FROM stusystem.standard WHERE std_num=#{std_num}
+    </select>
+
+
+</mapper>
