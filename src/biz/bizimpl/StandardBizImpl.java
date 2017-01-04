@@ -2,8 +2,9 @@ package biz.bizimpl;
 
 import biz.StandardBiz;
 import dao.StandardDao;
-import dao.daoimpl.StandardDaoImpl;
 import emtity.Standard;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
@@ -11,8 +12,10 @@ import java.util.Map;
 /**
  * Created by 25397 on 2016/12/22.
  */
+@Service("standardBiz")
 public class StandardBizImpl implements StandardBiz {
-    private StandardDao standardDao=new StandardDaoImpl();
+    @Autowired
+    private StandardDao standardDao;
     @Override
     public int addStandard(Standard standard) {
         return standardDao.addStandard(standard);

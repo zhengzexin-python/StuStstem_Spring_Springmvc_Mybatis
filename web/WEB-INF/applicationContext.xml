@@ -15,6 +15,7 @@
           id="dataSource">
     </bean>
 
+
     <bean class="org.springframework.jdbc.datasource.DataSourceTransactionManager"
           id="transactionManager"
           p:dataSource-ref="dataSource"
@@ -35,6 +36,6 @@
     </bean>
 
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer"
-          p:basePackage="com.zexin.dao"
+          p:basePackage="dao"
     ></bean>
 </beans>
